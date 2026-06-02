@@ -80,6 +80,13 @@ builder.defineMetaHandler(async ({ id }) => {
       };
 });
 
+const isDirectStream = (url) => {
+    return (
+        url.includes(".m3u8") ||
+        url.match(/\.mp4(\?|$)/)
+    );
+};
+
 builder.defineStreamHandler(async ({ id }) => {
 
     const episodeUrl = decodeURIComponent(id);
@@ -103,10 +110,11 @@ builder.defineStreamHandler(async ({ id }) => {
 
     for (const server of allServers) {
 
-        if (
-            server.url.endsWith(".mp4") ||
-            server.url.includes(".m3u8")
-        ) {
+        if (server.server.toLowerCase().includes("streamtape")) {
+            continue;
+        }
+    
+        if (isDirectStream(server.url)) {
             streams.push({
                 title: server.server,
                 url: server.url

@@ -94,27 +94,13 @@ builder.defineStreamHandler(async ({ id }) => {
         }
     );
 
-    const streams = [];
+    console.log(
+        JSON.stringify(data.data.servers, null, 2)
+    );
 
-    if (data.data.servers.sub) {
-        streams.push(
-            ...data.data.servers.sub.map(server => ({
-                title: `[SUB] ${server.server}`,
-                externalUrl: server.url
-            }))
-        );
-    }
-
-    if (data.data.servers.dub) {
-        streams.push(
-            ...data.data.servers.dub.map(server => ({
-                title: `[DUB] ${server.server}`,
-                externalUrl: server.url
-            }))
-        );
-    }
-
-    return { streams };
+    return {
+        streams: []
+    };
 });
 
 serveHTTP(builder.getInterface(), {

@@ -94,13 +94,27 @@ builder.defineStreamHandler(async ({ id }) => {
         }
     );
 
-    console.log(
-        JSON.stringify(data.data.servers, null, 2)
-    );
+    const streams = [];
 
-    return {
-        streams: []
-    };
+    const allServers = [
+        ...(data.data.servers.sub || []),
+        ...(data.data.servers.dub || [])
+    ];
+
+    for (const server of allServers) {
+
+        if (
+            server.url.endsWith(".mp4") ||
+            server.url.includes(".m3u8")
+        ) {
+            streams.push({
+                title: server.server,
+                url: server.url
+            });
+        }
+    }
+
+    return { streams };
 });
 
 serveHTTP(builder.getInterface(), {

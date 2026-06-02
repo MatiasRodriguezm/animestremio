@@ -1,9 +1,9 @@
 {
   "name": "anime1v-stremio",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "addon.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node addon.js"
   },
   "keywords": [],
   "author": "",

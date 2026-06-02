@@ -110,17 +110,20 @@ builder.defineStreamHandler(async ({ id }) => {
 
     for (const server of allServers) {
 
-        if (server.server.toLowerCase().includes("streamtape")) {
-            continue;
-        }
+        const url = server.url;
     
-        if (isDirectStream(server.url)) {
-            streams.push({
-                title: server.server,
-                url: server.url
-            });
-        }
+        if (!url) continue;
+    
+        // bloquear explícitamente embeds problemáticos
+        if (server.server?.toLowerCase().includes("streamtape")) continue;
+    
+        streams.push({
+            title: server.server,
+            url: url
+        });
     }
+    console.log(streams);
+    console.log(allServers);
 
     return { streams };
 });
